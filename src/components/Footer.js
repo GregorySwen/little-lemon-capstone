@@ -19,19 +19,21 @@ export default function Footer() {
       <div className="footer-contact">
         <h3>Contact</h3>
         <p>Address</p>
-        <p>200 E RANDOLPH ST FL 20 CHICAGO IL USA</p>
+        <span className="high-light-text">
+          200 E RANDOLPH ST FL 20 CHICAGO IL USA
+        </span>
         <p>Phone Number</p>
-        <p>1-309-370-3173</p>
+        <span className="high-light-text">1-309-370-3173</span>
         <p>Email</p>
-        <p>
+        <span className="high-light-text">
           <FontAwesomeIcon icon={faEnvelope} /> email@email.com
-        </p>
+        </span>
       </div>
       <>
         <Links {...socialLinkProps} />
       </>
       <div className="footer-copyright">
-        <p>© Little Lemon</p>
+        <span className="high-light-text">© Little Lemon</span>
       </div>
     </footer>
   );

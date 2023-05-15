@@ -4,6 +4,97 @@
   padding: 0;
 }
 
+/* Display Title - Medium 64pt */
+h1 {
+  font-family: "Markazi Text";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 64px;
+  line-height: 77px;
+}
+
+/* Sub title - keep close to display Regular 40pt */
+h2 {
+  font-family: "Markazi Text";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+}
+
+/* Lead text! Use this for descriptive items to catch attention!e.g. home page or CTA (Call to action)
+Medium 18pt */
+h3 {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+/* SECTION TITLE! UPPERCASE 20pt EXTRA BOLD */
+h4 {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 23px;
+  text-transform: uppercase;
+}
+
+/* This weeks specials! Section categories 16pt Extra Bold */
+h5 {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 19px;
+  text-transform: capitalize;
+}
+
+/* Card Title 18pt Bold */
+h6 {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+/* Highlight text e.g. price medium 16pt  */
+.high-light-text {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+/* Paragraph text regular 16pt 1.5 line height Max 65 characters per line.*/
+p {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+a {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.call-to-action {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+}
+
 #root {
   width: 100vw;
   max-width: 100%;
@@ -12,12 +103,15 @@
 }
 
 nav {
+  max-width: 100%;
   display: flex;
+  flex: auto;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: auto;
+  justify-content: center;
   grid-row: 1/1;
 }
+
 nav * {
   margin-top: auto;
   margin-bottom: auto;
@@ -25,7 +119,8 @@ nav * {
 
 .nav-link {
   list-style-type: none;
-  margin-left: 0.75rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .nav-link li {
@@ -39,10 +134,15 @@ nav * {
 }
 
 nav a {
-  text-align: center;
-  font-weight: bold;
   text-decoration: none;
   color: #495e57;
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 23px;
+  align-items: center;
+  text-transform: uppercase;
 }
 
 nav a:hover {
@@ -52,6 +152,60 @@ nav a:hover {
 main {
   grid-row: 2/2;
   height: 120vh;
+  display: grid;
+  grid-template-rows: 0.5fr 2fr 2fr 2fr;
+}
+
+.hero-card {
+  grid-row: 1/1;
+  display: grid;
+  grid-template-columns: auto auto;
+  background: #495e57;
+}
+
+.hero-card * {
+  color: #edefee;
+  background: #495e57;
+}
+
+.hero-card .col-1 {
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-rows: 0.5fr 0.5fr 0.5fr 20px;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  grid-column: 1/2;
+}
+
+.hero-card .col-1 .row-1 {
+  grid-row: 1/1;
+  margin-bottom: -1rem;
+}
+.hero-card .col-1 .row-2 {
+  margin-top: 0.125rem;
+  grid-row: 2/2;
+}
+.hero-card .col-1 .row-3 {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  grid-row: 3/3;
+}
+.hero-card .col-1 .row-4 {
+  grid-row: 4/4;
+}
+
+.hero-card .col-2 {
+  margin-left: auto;
+  margin-right: auto;
+  grid-column: 2/2;
+}
+.hero-card h1 {
+  color: #f4ce14;
+}
+.hero-card img {
+  border-radius: 16px;
+  margin-bottom: -24rem;
 }
 
 footer {
@@ -74,7 +228,6 @@ footer > * {
 footer * {
   background: #495e57;
   color: #edefee;
-  font-size: 18px;
   text-decoration: none;
 }
 
@@ -92,13 +245,10 @@ footer a:hover {
 }
 footer h3 {
   color: #333;
-  font-size: 18px;
   margin-bottom: 0.125rem;
 }
 .footer-contact {
   color: #edefee;
-  font-weight: 400;
-  font-size: 18px;
 }
 .footer-copyright {
   margin-left: auto;

@@ -1,3 +1,9 @@
+import HeroCard from "./HeroCard";
+
 export default function Main() {
-  return <main></main>;
+  return (
+    <main>
+      <HeroCard />
+    </main>
+  );
 }
