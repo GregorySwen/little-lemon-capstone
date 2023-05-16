@@ -1,6 +1,6 @@
 import VerticalLogoMono from "../assets/VerticalLogoMono.png";
-import socialLinkProps from "../util/SocialLinkProps";
-import doormatLinkProps from "../util/DoormatNavLinkProps";
+import socialLinkProps from "../props/SocialLinkProps";
+import doormatLinkProps from "../props/DoormatNavLinkProps";
 import Links from "./Links";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
@@ -8,15 +8,12 @@ import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 export default function Footer() {
   return (
     <footer>
-      <div>
-        <img
-          src={VerticalLogoMono}
-          alt="Little Lemon Logo"
-          height="200px"
-        ></img>
-      </div>
-      <Links {...doormatLinkProps} />
-      <div className="footer-contact">
+      <img src={VerticalLogoMono} alt="Little Lemon Logo" height="200px"></img>
+      <section className="doormat-nav">
+        {" "}
+        <Links {...doormatLinkProps} />
+      </section>
+      <section className="footer-contact">
         <h3>Contact</h3>
         <p>Address</p>
         <span className="high-light-text">
@@ -28,13 +25,14 @@ export default function Footer() {
         <span className="high-light-text">
           <FontAwesomeIcon icon={faEnvelope} /> email@email.com
         </span>
-      </div>
-      <>
+      </section>
+      <section className="social-nav">
+        {" "}
         <Links {...socialLinkProps} />
-      </>
-      <div className="footer-copyright">
+      </section>
+      <section className="footer-copyright">
         <span className="high-light-text">© Little Lemon</span>
-      </div>
+      </section>
     </footer>
   );
 }

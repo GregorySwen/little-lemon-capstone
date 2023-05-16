@@ -32,7 +32,7 @@ export default function HeroCard() {
           src={restaurantFood}
           width="360px"
           height="360px"
-          alt="A picture of the restaurant food."
+          alt="Restaurant food."
         ></img>
       </div>
     </section>
