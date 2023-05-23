@@ -1,18 +1,15 @@
-import HeroCard from "./HeroCard";
 import Highlight from "./Highlight";
+import Testimonials from "./Testimonials";
+import CallToAction from "./CallToAction";
+import About from "./About";
 
 export default function Main() {
   return (
     <main>
-      <section className="hero">
-        {" "}
-        <HeroCard />
-      </section>
-      <section className="highlight">
-        <Highlight />
-      </section>
-      <section className="testimonials"></section>
-      <section className="about"></section>
+      <CallToAction />
+      <Highlight />
+      <Testimonials />
+      <About />
     </main>
   );
 }

@@ -6,7 +6,7 @@ export default function Highlight() {
   const buttonProps = { text: "Online Menu", width: 150, height: 40 };
 
   return (
-    <>
+    <section className="highlight">
       <h2>This week's specials!</h2>
       <Button {...buttonProps} />
       <div className="cards">
@@ -14,6 +14,6 @@ export default function Highlight() {
           <HighlightCard key={item.itemName} {...item} />
         ))}
       </div>
-    </>
+    </section>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DeliveryIcon from "../assets/DeliveryIcon.svg";
 
-export default function OrderDeliveryCTA(props) {
+export default function OrderDeliveryButton(props) {
   const [clickCount, setClickCount] = useState(0);
   const itemName = !props.itemName ? undefined : props.itemName;
   useEffect(() => {

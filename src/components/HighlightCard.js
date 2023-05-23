@@ -1,4 +1,4 @@
-import OrderDeliveryCTA from "./OrderDeliveryCTA";
+import OrderDeliveryButton from "./OrderDeliveryButton";
 
 export default function HighlightCard(props) {
   return (
@@ -23,7 +23,7 @@ export default function HighlightCard(props) {
         <p>{props.description}</p>
       </div>
       <div className="row-4">
-        <OrderDeliveryCTA {...props} />
+        <OrderDeliveryButton {...props} />
       </div>
     </div>
   );

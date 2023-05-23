@@ -10,6 +10,8 @@ export default function Button(props) {
     color: "#333333",
     borderRadius: "16px",
     border: "none",
+    alignItems: "center",
+    justifyItems: "center",
   };
   return (
     <>
