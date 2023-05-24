@@ -1,6 +1,6 @@
-import GreekSalad from "../assets/GreekSalad.jpg";
-import Bruschetta from "../assets/Bruschetta.svg";
-import LemonDessert from "../assets/LemonDessert.jpg";
+import GreekSalad from "../assets/GreekSalad.webp";
+import Bruschetta from "../assets/Bruschetta.webp";
+import LemonDessert from "../assets/LemonDessert.webp";
 
 const highlightProps = [
   {

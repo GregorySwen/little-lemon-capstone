@@ -1,7 +1,7 @@
 import "./Hero.css";
 import Button from "../common/Button";
 import { useNavigate } from "react-router-dom";
-import restaurantFood from "../../assets/restauranfood.jpg";
+import restaurantFood from "../../assets/RestaurantFood.webp";
 import Title from "../common/Title";
 
 export default function Hero() {

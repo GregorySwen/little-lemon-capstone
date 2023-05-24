@@ -1,4 +1,4 @@
-import James from "../assets/James.jpg";
+import James from "../assets/James.webp";
 
 const testimonialsProps = [
   {

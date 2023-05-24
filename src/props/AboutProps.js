@@ -1,5 +1,5 @@
-import MarioAdrianA from "../assets/MarioAdrianA.jpg";
-import MarioAdrianB from "../assets/MarioAdrianB.jpg";
+import MarioAdrianA from "../assets/MarioAdrianA.webp";
+import MarioAdrianB from "../assets/MarioAdrianB.webp";
 const aboutProps = {
   imgs: [
     { src: MarioAdrianA, alt: "Mario and Adrian" },
