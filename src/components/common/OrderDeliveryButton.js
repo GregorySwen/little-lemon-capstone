@@ -1,9 +1,11 @@
 import "./OrderDeliveryButton.css";
 import { useEffect, useState } from "react";
 import DeliveryIcon from "../../assets/DeliveryIcon.svg";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderDeliveryButton(props) {
   const [clickCount, setClickCount] = useState(0);
+  const navigate = useNavigate();
   const itemName = !props.itemName ? undefined : props.itemName;
   useEffect(() => {
     if (itemName === undefined) {
@@ -17,6 +19,7 @@ export default function OrderDeliveryButton(props) {
   }, [clickCount, itemName]);
   const handleClick = () => {
     setClickCount((oldCount) => oldCount + 1);
+    navigate("/menu");
   };
   return (
     <button

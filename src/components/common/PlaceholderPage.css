@@ -1,0 +1,11 @@
+section.placeholder {
+  height: 100vh;
+  background: #495e57;
+}
+
+section.placeholder > .stack {
+  flex-direction: column;
+  gap: 6rem;
+  align-items: center;
+  justify-content: center;
+}

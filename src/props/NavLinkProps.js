@@ -16,7 +16,7 @@ const links = [
   },
   {
     linkTitle: "Reservations",
-    href: "/reservations",
+    href: "/booking",
     newTab: false,
   },
   {

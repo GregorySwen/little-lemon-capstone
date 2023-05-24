@@ -1,14 +1,20 @@
 import "./Specials.css";
 import highlightProps from "../../props/HighlightProps";
 import Button from "../common/Button";
+import { useNavigate } from "react-router-dom";
 import SpecialCard from "./SpecialCard";
 
 export default function Specials() {
+  const navigate = useNavigate();
+  const navigateToMenu = () => {
+    navigate("/menu");
+  };
   const buttonProps = {
     text: "Online Menu",
     width: 200,
     height: 60,
     type: "primary",
+    handleClick: navigateToMenu,
   };
 
   return (
