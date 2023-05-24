@@ -1,7 +1,7 @@
 const links = [
   {
     linkTitle: "Home",
-    href: "/home",
+    href: "/",
     newTab: false,
   },
   {

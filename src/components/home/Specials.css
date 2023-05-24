@@ -1,0 +1,11 @@
+section.specials {
+  margin-top: 8rem;
+  justify-items: left;
+  margin-bottom: 4rem;
+}
+
+.specials > :nth-child(2) {
+  width: 100%;
+  flex-basis: 300px;
+  margin-top: 2rem;
+}

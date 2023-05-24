@@ -1,0 +1,11 @@
+.chicago .img-stack :first-child {
+  transform: rotateY(180deg);
+}
+
+.chicago .img-stack :last-child {
+  z-index: 1;
+}
+
+.chicago .img-stack img:hover {
+  z-index: 2;
+}

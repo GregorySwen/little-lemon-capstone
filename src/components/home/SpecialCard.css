@@ -1,0 +1,40 @@
+.special-card {
+  display: grid;
+  background: #edefee;
+  grid-template-rows: repeat(4, auto);
+  width: 265px;
+  height: 440px;
+}
+
+.special-card .row-1 {
+  margin: 0;
+  padding: 0;
+  grid-row: 1/2;
+}
+
+.special-card .row-2 {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-right: 8px;
+  grid-row: 2/3;
+}
+
+.special-card .row-3 {
+  padding-left: 8px;
+  padding-right: 8px;
+  grid-row: 3/4;
+}
+
+.special-card .row-4 {
+  padding-left: 8px;
+  padding-right: 8px;
+  grid-row: 4/-1;
+}
+
+.special-card p {
+  max-width: 240px;
+}
+.special-card .high-light-text {
+  color: #ee9972;
+}

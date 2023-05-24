@@ -1,0 +1,33 @@
+button {
+  border-radius: 16px;
+  border: none;
+  align-items: center;
+  justify-items: center;
+}
+
+button.primary {
+  color: #333;
+  background: #f4ce14;
+}
+
+button.primary:hover {
+  cursor: pointer;
+  background: #fbdabb;
+}
+button.primary:hover > span {
+  background: #fbdabb;
+}
+
+button.primary:active {
+  background: #ee9972;
+}
+
+button.primary:active > span {
+  background: #ee9972;
+}
+
+button.primary,
+button.primary * {
+  color: #333;
+  background: #f4ce14;
+}

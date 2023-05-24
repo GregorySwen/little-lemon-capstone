@@ -1,5 +1,6 @@
+import "./OrderDeliveryButton.css";
 import { useEffect, useState } from "react";
-import DeliveryIcon from "../assets/DeliveryIcon.svg";
+import DeliveryIcon from "../../assets/DeliveryIcon.svg";
 
 export default function OrderDeliveryButton(props) {
   const [clickCount, setClickCount] = useState(0);
@@ -18,7 +19,12 @@ export default function OrderDeliveryButton(props) {
     setClickCount((oldCount) => oldCount + 1);
   };
   return (
-    <button type="button" onClick={handleClick} style={{ border: "none" }}>
+    <button
+      className="delivery-button"
+      type="button"
+      onClick={handleClick}
+      style={{ border: "none" }}
+    >
       <span className="call-to-action">
         Order a delivery&nbsp;&nbsp;
         <img src={DeliveryIcon} height="16px" alt="Delivery icon"></img>

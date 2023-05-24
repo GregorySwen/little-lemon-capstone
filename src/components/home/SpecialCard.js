@@ -1,12 +1,13 @@
-import OrderDeliveryButton from "./OrderDeliveryButton";
+import "./SpecialCard.css";
+import OrderDeliveryButton from "../common/OrderDeliveryButton";
 
-export default function HighlightCard(props) {
+export default function SpecialCard(props) {
   return (
-    <div
-      className="highlight-card"
+    <article
+      className="special-card"
       style={{ borderRadius: "16px 16px 0px 0px" }}
     >
-      <div className="row-1">
+      <section className="row-1">
         <img
           src={props.image}
           alt={!props.alt ? `A picture of ${props.itemName}` : props.alt}
@@ -14,17 +15,17 @@ export default function HighlightCard(props) {
           width="265px"
           height="185px"
         ></img>
-      </div>
-      <div className="row-2">
+      </section>
+      <section className="row-2">
         <h6>{props.itemName}</h6>
         <span className="high-light-text">{`$${props.price.toFixed(2)}`}</span>
-      </div>
-      <div className="row-3">
+      </section>
+      <section className="row-3">
         <p>{props.description}</p>
-      </div>
-      <div className="row-4">
+      </section>
+      <section className="row-4">
         <OrderDeliveryButton {...props} />
-      </div>
-    </div>
+      </section>
+    </article>
   );
 }

@@ -1,9 +1,11 @@
-import HeroCard from "./HeroCard";
+import Hero from "./Hero";
 
 export default function CallToAction() {
   return (
     <section className="hero">
-      <HeroCard />
+      <section className="stack">
+        <Hero />
+      </section>
     </section>
   );
 }

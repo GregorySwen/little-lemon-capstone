@@ -1,0 +1,11 @@
+.chicago > .stack {
+  flex-basis: 440px;
+}
+
+.chicago .description h2 {
+  margin-bottom: 15%;
+}
+.chicago .description p {
+  max-width: 40ch;
+  text-align: justify;
+}

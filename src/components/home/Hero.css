@@ -1,0 +1,40 @@
+section.hero {
+  background: #495e57;
+  justify-items: left;
+  align-items: start;
+}
+
+.hero * {
+  color: #edefee;
+}
+
+.hero > .stack {
+  flex-basis: 360px;
+}
+
+.hero .hero-description {
+  margin-top: 1rem;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero .hero-description p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  max-width: 28ch;
+}
+
+.hero h1 {
+  color: #f4ce14;
+}
+
+.hero .hero-image {
+  margin-top: 2%;
+  margin-bottom: -8%;
+  justify-self: right;
+}
+
+.hero img {
+  border-radius: 16px;
+}

@@ -1,3 +1,4 @@
+import "./OverlappingImageStack.css";
 export default function OverlappingImageStack(props) {
   const imgWidth = 272;
   const imgHeight = 338;
@@ -32,7 +33,6 @@ export default function OverlappingImageStack(props) {
       gridRow: "1/2 ",
       paddingTop: idx % 2 === 0 ? `${paddingBottom * 100}%` : "0",
       objectFit: "cover",
-      zIndex: idx,
     };
   };
   const getImages = () => {
@@ -50,9 +50,9 @@ export default function OverlappingImageStack(props) {
   return (
     props.imgs &&
     props.imgs.length > 0 && (
-      <div className="img-stack" style={getStackStyle()}>
+      <section className="img-stack" style={getStackStyle()}>
         {getImages()}
-      </div>
+      </section>
     )
   );
 }

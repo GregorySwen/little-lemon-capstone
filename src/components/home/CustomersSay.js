@@ -1,15 +1,16 @@
-import testimonialsProps from "../props/TestimonialsProps";
+import "./CustomersSay.css";
+import testimonialsProps from "../../props/TestimonialsProps";
 import TestimonialCard from "./TestimonialCard";
 
-export default function Testimonials() {
+export default function CustomersSay() {
   return (
-    <section className="testimonials">
+    <section className="customers-say">
       <h1>Testimonials</h1>
-      <div className="cards">
+      <section className="stack">
         {testimonialsProps.map((client, idx) => (
           <TestimonialCard key={client.name + idx} {...client} />
         ))}
-      </div>
+      </section>
     </section>
   );
 }

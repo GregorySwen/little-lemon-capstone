@@ -3,6 +3,19 @@
   padding: 0;
 }
 
+:root {
+  --twelve-grid-offset: 1;
+  --global-column-span: 12;
+  --global-column-start: calc(var(--twelve-grid-offset) + 1);
+  --global-column-end: calc(
+    var(--global-column-start) + var(--global-column-span)
+  );
+}
+
+body {
+  max-width: 100vw;
+}
+
 /* Display Title - Medium 64pt */
 h1 {
   font-family: "Markazi Text";
@@ -94,321 +107,55 @@ a {
   line-height: 21px;
 }
 
-#root {
-  width: 100vw;
-  max-width: 100%;
-}
-
-nav {
-  display: grid;
-  grid-template-columns: 3.4vw repeat(12, 6.25vw) 3.4vw;
-  column-gap: 1.38vw;
-  align-items: start;
-  justify-items: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-nav * {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-nav img {
-  grid-column: 4/6;
-}
-
-.nav-link {
-  justify-self: left;
-  grid-column: 6/13;
-  margin-left: 3rem;
-  display: flex;
-  justify-content: space-between;
-  list-style-type: none;
-}
-
-.nav-link li {
-  margin-left: 0;
-  margin-right: 2.5rem;
-}
-.nav-link li:last-child {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-nav a {
-  text-decoration: none;
-  color: #495e57;
-  font-family: "Karla";
-  font-style: normal;
-  font-weight: 800;
-  font-size: 20px;
-  line-height: 23px;
-  align-items: center;
-  text-transform: uppercase;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-section.hero {
-  background: #495e57;
-  display: grid;
-  grid-template-columns: 3.4vw repeat(12, 6.25vw) 3.4vw;
-  column-gap: 1.38vw;
-  justify-items: left;
-}
-
-.hero-card {
-  grid-column: 4/12;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  background: #495e57;
-}
-
-.hero-card * {
-  color: #edefee;
-  background: #495e57;
-}
-
-.hero-card .col-1 {
-  display: flex;
-  flex-direction: column;
-  gap: 5%;
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.hero-card .col-1 p {
-  width: 28ch;
-}
-
-.hero-card h1 {
-  color: #f4ce14;
-}
-.hero-card img {
-  border-radius: 16px;
-  margin-bottom: -90px;
-  margin-top: 30px;
-  justify-self: right;
-}
-
-section.highlight {
-  margin-top: 120px;
-  display: grid;
-  grid-template-columns: 3.4vw repeat(12, 6.25vw) 3.4vw;
-  grid-row: auto auto;
-  column-gap: 1.38vw;
-  justify-items: left;
-}
-
-.highlight h2 {
-  grid-column: 4/9;
-  grid-row: 1/2;
-}
-
-.highlight button {
-  grid-column: 10/12;
-  justify-self: right;
-  align-self: center;
-  grid-row: 1/2;
-}
-
-.highlight .cards {
-  width: 100%;
-  grid-column: 4/12;
-  grid-row: 2/2;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-}
-
-.highlight-card {
-  display: grid;
-  background: #edefee;
-  grid-template-rows: repeat(4, auto);
-  width: 265px;
-  height: 440px;
-}
-
-.highlight-card .row-1 {
-  margin: 0;
-  padding: 0;
-  grid-row: 1/2;
-}
-
-.highlight-card .row-2 {
-  display: flex;
-  justify-content: space-between;
-  padding-left: 8px;
-  padding-right: 8px;
-  grid-row: 2/3;
-}
-
-.highlight-card .row-3 {
-  padding-left: 8px;
-  padding-right: 8px;
-  grid-row: 3/4;
-}
-
-.highlight-card .row-4 {
-  padding-left: 8px;
-  padding-right: 8px;
-  grid-row: 4/-1;
-}
-
-.highlight-card p {
-  max-width: 240px;
-}
-.highlight-card .high-light-text {
-  color: #ee9972;
-}
-
-section.testimonials {
-  margin-top: 1.5rem;
-  background: #495e57;
-  display: grid;
-  grid-template-columns: 3.4vw repeat(12, 6.25vw) 3.4vw;
-  grid-template-rows: 1fr 2fr;
-  column-gap: 1.38vw;
-  justify-items: left;
-}
-
-.testimonials h1 {
-  grid-column: 1/-1;
-  grid-row: 1/1;
-  justify-self: center;
-  align-self: baseline;
-  padding-top: 96px;
-  margin-bottom: 24px;
-}
-.testimonials .cards {
-  width: 100%;
-  grid-column: 4/12;
-  grid-row: 2/-1;
-  display: flex;
-  justify-content: space-between;
-  align-self: center;
-  margin-bottom: 96px;
-}
-
-.testimonial-card {
-  display: grid;
-  grid-template-rows: repeat(3, auto);
-}
-
-.testimonial-card > * {
-  padding-left: 24px;
-}
-
-.testimonial-card .row-1 {
-  padding-top: 24px;
-  grid-row: 1/2;
-}
-
-.testimonial-card .row-2 {
-  height: 45px;
-  display: flex;
-  grid-row: 2/3;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.testimonial-card .high-light-text {
-  padding-left: 12px;
-}
-
-.testimonial-card .row-3 {
-  grid-row: 3/-1;
-}
-
-section.about {
-  display: grid;
-  grid-template-columns: 3.4vw repeat(12, 6.25vw) 3.4vw;
-  column-gap: 1.38vw;
-  justify-items: left;
+main {
   margin-top: 3rem;
 }
 
-.about .description {
-  grid-column: 4/8;
-  height: 100%;
-}
-
-.about .description h2 {
-  margin-bottom: 15%;
-}
-.about .description p {
-  width: 40ch;
-  text-align: justify;
-}
-
-.about .img-stack {
-  grid-column: 8/12;
-}
-
-.about .img-stack :first-child {
-  transform: rotateY(180deg);
-}
-
+nav,
+main > section,
 footer {
-  background: #495e57;
-  height: 120%;
   display: grid;
-  grid-template-columns: 3.4vw repeat(12, 6.25vw) 3.4vw;
-  column-gap: 1.38vw;
-  grid-template-rows: 1fr auto;
+  grid-template-columns: 3.4% repeat(12, 6.25%) 3.4%;
+  column-gap: 1.4%;
+}
+
+nav > .stack,
+main > section > .stack,
+footer > .stack {
+  width: 100%;
+  grid-column: var(--global-column-start) / var(--global-column-end);
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+section.customers-say,
+section.chicago {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
   justify-items: left;
+  align-items: center;
 }
 
-footer > * {
-  margin-top: 1rem;
+@media all and (min-width: 1280px) {
+  :root {
+    --twelve-grid-offset: 2;
+    --global-column-span: 10;
+  }
 }
 
-footer * {
-  background: #495e57;
-  color: #edefee;
-  text-decoration: none;
+@media all and (min-width: 1366px) {
+  :root {
+    --twelve-grid-offset: 2;
+    --global-column-span: 9;
+  }
 }
 
-footer > :first-child {
-  margin-bottom: auto;
-  grid-column: 4/6;
-  grid-row: 1/1;
-}
-
-footer a:hover {
-  color: #333;
-}
-footer h3 {
-  color: #333;
-  margin-bottom: 0.125rem;
-}
-
-.doormat-nav {
-  grid-column: 6/8;
-  grid-row: 1/1;
-}
-
-.footer-contact {
-  grid-column: 8/10;
-  grid-row: 1/1;
-  color: #edefee;
-}
-
-.social-nav {
-  grid-column: 10/13;
-  grid-row: 1/1;
-}
-
-.footer-copyright {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  grid-column: 1/-1;
-  grid-row: 2/-1;
-  text-align: center;
+@media all and (min-width: 1440px) {
+  :root {
+    --twelve-grid-offset: 3;
+    --global-column-span: 8;
+  }
 }
