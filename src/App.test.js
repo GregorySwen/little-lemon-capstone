@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import BookingPage from "./components/BookingPage";
 import { initializeTimes, updateTimes } from "./components/Main";
+import { testFetchAPI } from "./utils/api";
 
 test("Renders the BookingForm heading", () => {
   render(
@@ -13,60 +14,17 @@ test("Renders the BookingForm heading", () => {
 });
 
 test("Checks the return of initializeTimes", () => {
-  const actual = initializeTimes();
-  const expected = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+  const actual = initializeTimes(true);
+  const expected = testFetchAPI(new Date());
   expect(actual).toEqual(expected);
 });
 
 test("Checks the return of updateTimes", () => {
-  const actionMonToFri = { type: "Mon to Fri" };
-  const actionSat = { type: "Sat" };
-  const actionSun = { type: "Sun" };
-  const errorActionType = "None";
-  const actionError = { type: errorActionType };
-
-  const expectedMonToFri = [
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-  ];
-  const expectedSat = [
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00",
-  ];
-  const expectedSun = [
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-  ];
-
-  const actualMonToFri = updateTimes([], actionMonToFri);
-  const actualSat = updateTimes([], actionSat);
-  const actualSun = updateTimes([], actionSun);
-
-  expect(actualMonToFri).toEqual(expectedMonToFri);
-  expect(actualSat).toEqual(expectedSat);
-  expect(actualSun).toEqual(expectedSun);
-  expect(() => updateTimes([], actionError)).toThrow(
-    `Unknown action: ${errorActionType}`
-  );
+  const dates = ["2023-1-31", "2023-2-22", "2023-5-31"];
+  for (let index = 0; index < dates.length; index++) {
+    const action = { type: "test", date: dates[index] };
+    const actual = updateTimes([], action);
+    const expected = testFetchAPI(new Date(dates[index]));
+    expect(actual).toEqual(expected);
+  }
 });

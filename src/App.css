@@ -139,16 +139,30 @@ section.chicago {
   align-items: center;
 }
 
-@media all and (min-width: 1280px) {
+@media all and (min-width: 800px) {
   :root {
     --twelve-grid-offset: 2;
     --global-column-span: 10;
   }
 }
 
-@media all and (min-width: 1366px) {
+@media all and (min-width: 1024px) {
   :root {
     --twelve-grid-offset: 2;
+    --global-column-span: 9;
+  }
+}
+
+@media all and (min-width: 1280px) {
+  :root {
+    --twelve-grid-offset: 2;
+    --global-column-span: 8;
+  }
+}
+
+@media all and (min-width: 1366px) {
+  :root {
+    --twelve-grid-offset: 3;
     --global-column-span: 9;
   }
 }

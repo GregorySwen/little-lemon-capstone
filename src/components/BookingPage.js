@@ -1,62 +1,53 @@
 import "./BookingPage.css";
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function BookingPage(props) {
-  const [inputDate, setInputDate] = useState("");
-  const [inputTime, setInputTime] = useState(props.availableTimes[0]);
-  useEffect(() => {
-    if (needResetTimeOption.current) {
-      resTimeRef.current.value = 0;
-      needResetTimeOption.current = false;
-    }
-  }, [props.availableTimes]);
-  const resTimeRef = useRef(undefined);
-  const needResetTimeOption = useRef(false);
+  const occasions = ["Birthday", "Anniversary"];
+  const [formData, setFromData] = useState({
+    date: new Date().toISOString().split("T")[0],
+    time: props.availableTimes[0],
+    numOfDiners: 1,
+    occasion: occasions[0],
+  });
   const style = { display: "grid", maxWidth: "200px", gap: "20px" };
   return (
     <>
       <section className="booking-page">
         <section className="stack">
-          <h2>Book Now</h2>
+          <h1>Book Now</h1>
           <form
             style={style}
             onSubmit={(e) => {
               e.preventDefault();
+              if (!submitAPI) {
+                throw Error("Cannot load submitAPI");
+              }
+              /*global submitAPI*/
+              /*eslint no-undef: "error"*/
+              const result = submitAPI(formData);
+              if (result) {
+              }
             }}
           >
             <label htmlFor="res-date">Choose date</label>
             <input
               type="date"
               id="res-date"
-              value={inputDate}
+              value={formData.date}
               onChange={(e) => {
-                if (inputDate === "") {
-                  needResetTimeOption.current = true;
-                }
-                setInputDate(e.target.value);
-                const dateSelected = new Date(e.target.value);
-                switch (true) {
-                  case dateSelected.getDay() === 0: {
-                    props.availableTimesDispatch({ type: "Sun" });
-                    break;
-                  }
-                  case dateSelected.getDay() > 5: {
-                    props.availableTimesDispatch({ type: "Sat" });
-                    break;
-                  }
-                  default: {
-                    props.availableTimesDispatch({ type: "Mon to Fri" });
-                  }
-                }
+                setFromData({ ...formData, date: e.target.value });
+                props.availableTimesDispatch({ date: e.target.value });
               }}
             />
             <label htmlFor="res-time">Choose time</label>
             <select
               id="res-time"
-              ref={resTimeRef}
-              value={props.availableTimes.indexOf(inputTime)}
+              value={props.availableTimes.indexOf(formData.time)}
               onChange={(e) => {
-                setInputTime(props.availableTimes[e.target.value]);
+                setFromData({
+                  ...formData,
+                  time: props.availableTimes[e.target.value],
+                });
               }}
             >
               {props.availableTimes.map((time, idx) => (
@@ -66,11 +57,36 @@ export default function BookingPage(props) {
               ))}
             </select>
             <label htmlFor="guests">Number of guests</label>
-            <input type="number" placeholder="1" min="1" max="10" id="guests" />
+            <input
+              type="number"
+              value={formData.numOfDiners.toString()}
+              onChange={(e) => {
+                setFromData({
+                  ...formData,
+                  numOfDiners: parseInt(e.target.value),
+                });
+              }}
+              placeholder="1"
+              min="1"
+              max="10"
+              id="guests"
+            />
             <label htmlFor="occasion">Occasion</label>
-            <select id="occasion">
-              <option>Birthday</option>
-              <option>Anniversary</option>
+            <select
+              id="occasion"
+              value={occasions.indexOf(formData.occasion)}
+              onChange={(e) => {
+                setFromData({
+                  ...formData,
+                  occasion: occasions[e.target.value],
+                });
+              }}
+            >
+              {occasions.map((occasion, idx) => (
+                <option key={occasion} value={idx}>
+                  {occasion}
+                </option>
+              ))}
             </select>
             <input type="submit" value="Make Your reservation" />
           </form>

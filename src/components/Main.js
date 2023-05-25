@@ -3,65 +3,27 @@ import React, { useReducer } from "react";
 import HomePage from "./HomePage";
 import BookingPage from "./BookingPage";
 import PlaceholderPage from "./common/PlaceholderPage";
+import { testFetchAPI } from "../utils/api";
 
 export const updateTimes = (state, action) => {
-  switch (action.type) {
-    // 2pm - 10pm
-    case "Mon to Fri": {
-      return [
-        "14:00",
-        "15:00",
-        "16:00",
-        "17:00",
-        "18:00",
-        "19:00",
-        "20:00",
-        "21:00",
-        "22:00",
-      ];
-    }
-    // 2pm - 11pm
-    case "Sat": {
-      return [
-        "14:00",
-        "15:00",
-        "16:00",
-        "17:00",
-        "18:00",
-        "19:00",
-        "20:00",
-        "21:00",
-        "22:00",
-        "23:00",
-      ];
-    }
-    // 2pm - 9pm
-    case "Sun": {
-      return [
-        "14:00",
-        "15:00",
-        "16:00",
-        "17:00",
-        "18:00",
-        "19:00",
-        "20:00",
-        "21:00",
-      ];
-    }
-    default: {
-      throw Error(`Unknown action: ${action.type}`);
-    }
+  if (action.type === "test") {
+    return testFetchAPI(new Date(action.date));
   }
+  return fetchAPI(new Date(action.date));
 };
 
-export const initializeTimes = () => [
-  "17:00",
-  "18:00",
-  "19:00",
-  "20:00",
-  "21:00",
-  "22:00",
-];
+export const initializeTimes = (isTest) => {
+  if (isTest === true) {
+    return testFetchAPI(new Date());
+  }
+  if (!fetchAPI) {
+    throw Error(`Cannot load fetchAPI`);
+  }
+  /*global fetchAPI*/
+  /*eslint no-undef: "error"*/
+
+  return fetchAPI(new Date());
+};
 
 export default function Main() {
   const [availableTimes, availableTimesDispatch] = useReducer(

@@ -1,8 +1,6 @@
 .booking-page > .stack {
   margin-top: 4rem;
   margin-bottom: 4rem;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
 }
 
