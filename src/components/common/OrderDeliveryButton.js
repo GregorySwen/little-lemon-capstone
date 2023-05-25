@@ -19,7 +19,7 @@ export default function OrderDeliveryButton(props) {
   }, [clickCount, itemName]);
   const handleClick = () => {
     setClickCount((oldCount) => oldCount + 1);
-    navigate("/menu");
+    navigate("/order-online");
   };
   return (
     <button

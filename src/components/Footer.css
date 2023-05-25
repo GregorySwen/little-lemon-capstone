@@ -26,7 +26,8 @@ footer * {
   margin-bottom: auto;
 }
 
-footer a:hover {
+footer a:hover span,
+footer a:focus span {
   color: #333;
 }
 footer h3 {

@@ -9,3 +9,7 @@ section.placeholder > .stack {
   align-items: center;
   justify-content: center;
 }
+
+section.placeholder > .stack h1 {
+  color: #f4ce14;
+}

@@ -10,11 +10,13 @@ button.primary {
   background: #f4ce14;
 }
 
-button.primary:hover {
+button.primary:hover,
+button.primary:focus {
   cursor: pointer;
   background: #fbdabb;
 }
-button.primary:hover > span {
+button.primary:hover > span,
+button.primary:focus > span {
   background: #fbdabb;
 }
 

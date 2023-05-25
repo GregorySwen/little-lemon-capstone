@@ -32,7 +32,7 @@ const links = [
   },
   {
     linkTitle: "YouTube",
-    href: "https://youtube.com",
+    href: "https://youtu.be/dQw4w9WgXcQ",
     newTab: true,
     icon: youTubeIcon,
   },

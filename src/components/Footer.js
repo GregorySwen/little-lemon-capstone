@@ -25,12 +25,15 @@ export default function Footer() {
             200 E RANDOLPH ST FL 20 CHICAGO IL USA
           </span>
           <p>Phone Number</p>
-          <span className="high-light-text">1-309-370-3173</span>
+          <span className="high-light-text">+1 (778) 330-2389</span>
           <p>Email</p>
           <span className="high-light-text">
-            <FontAwesomeIcon icon={faEnvelope} />
-            &nbsp;
-            <a href="mailto: email@email.com">email@email.com</a>
+            <a href="mailto: email@email.com">
+              <span>
+                <FontAwesomeIcon icon={faEnvelope} />
+                &nbsp;email@email.com
+              </span>
+            </a>
           </span>
         </section>
         <section className="social-nav">
