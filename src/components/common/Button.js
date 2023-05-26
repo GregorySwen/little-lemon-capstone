@@ -17,9 +17,9 @@ export default function Button(props) {
   return (
     <>
       <button
-        className={props.type}
+        className={props.className}
         style={buttonStyle}
-        type="button"
+        type={!props.type ? "button" : props.type}
         onClick={handleClick}
       >
         <span className="call-to-action">{buttonText}</span>

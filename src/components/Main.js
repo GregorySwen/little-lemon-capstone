@@ -4,6 +4,8 @@ import HomePage from "./HomePage";
 import BookingPage from "./BookingPage";
 import PlaceholderPage from "./common/PlaceholderPage";
 import { testFetchAPI } from "../utils/api";
+import BookingConfirmation from "./BookingConfirmation";
+import NotFound from "./common/NotFound";
 
 export const updateTimes = (state, action) => {
   if (action.type === "test") {
@@ -49,6 +51,9 @@ export default function Main() {
         <Route path="/login" element={<PlaceholderPage title="Login Page" />} />
         <Route path="/menu" element={<PlaceholderPage title="Online Menu" />} />
         <Route path="/about" element={<PlaceholderPage title="About Page" />} />
+        <Route path="/booking-confirm" element={<BookingConfirmation />} />
+        <Route path="/404" element={<NotFound />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </main>
   );

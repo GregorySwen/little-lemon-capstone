@@ -13,7 +13,7 @@ export default function Specials() {
     text: "Online Menu",
     width: 200,
     height: 60,
-    type: "primary",
+    className: "primary",
     handleClick: navigateToMenu,
   };
 

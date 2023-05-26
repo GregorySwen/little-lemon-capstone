@@ -7,3 +7,42 @@
 .booking-page > .stack > :first-child {
   margin-bottom: 2rem;
 }
+
+.booking-form {
+  display: grid;
+  grid-template-columns: minmax(300px, 35%) auto;
+  column-gap: 1rem;
+}
+
+.booking-form .error-message {
+  color: red;
+  margin-top: -0.25rem;
+  grid-column: 2/2;
+}
+
+.booking-form label,
+.booking-form input,
+.booking-form select,
+.booking-form button {
+  grid-column: 1/2;
+}
+
+.booking-form label {
+  margin-bottom: 1rem;
+}
+
+.booking-form input,
+.booking-form select {
+  margin-bottom: 2rem;
+}
+
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid */
+.booking-form input:invalid,
+.booking-form select:invalid,
+.booking-form select.is-invalid,
+.booking-form input.is-invalid {
+  background-color: ivory;
+  border: none;
+  outline: 2px solid red;
+  border-radius: 5px;
+}

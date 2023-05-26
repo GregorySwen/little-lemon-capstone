@@ -11,7 +11,7 @@ export default function PlaceholderPage(props) {
     text: "Go Back",
     width: 200,
     height: 60,
-    type: "primary",
+    className: "primary",
     handleClick: back,
   };
   return (

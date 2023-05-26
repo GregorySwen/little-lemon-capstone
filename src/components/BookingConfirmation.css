@@ -1,0 +1,40 @@
+section.booking-confirmation > .stack {
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 4rem;
+  margin-bottom: 8rem;
+}
+
+section.booking-confirmation > .stack > img,
+section.booking-confirmation > .stack > h1,
+section.booking-confirmation > .stack > h3,
+section.booking-confirmation > .stack > button {
+  align-self: center;
+}
+
+section.booking-confirmation > .stack > h3 {
+  margin-top: -1.5rem;
+}
+
+section.booking-confirmation > .stack .booking-field {
+  display: grid;
+  gap: 1rem;
+  margin-left: 4rem;
+  margin-top: 1rem;
+}
+
+section.booking-confirmation > .stack .section-title {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+section.booking-confirmation > .stack .section-text {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+}

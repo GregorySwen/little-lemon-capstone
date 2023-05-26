@@ -13,7 +13,7 @@ export default function Hero() {
     text: "Reserve a Table",
     width: 200,
     height: 60,
-    type: "primary",
+    className: "primary",
     handleClick: navigateToBooking,
   };
   return (

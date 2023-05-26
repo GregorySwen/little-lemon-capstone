@@ -1,0 +1,6 @@
+section.not-found > .stack {
+  height: 80vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
