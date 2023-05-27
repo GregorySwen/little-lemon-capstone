@@ -25,26 +25,30 @@ export const numberToWord = (num) => {
   }
 };
 
+export const isValidDate = (input) => {
+  // https://stackoverflow.com/questions/1353684/detecting-an-invalid-date-date-instance-in-javascript
+  return input instanceof Date && !isNaN(input);
+};
+
 export const offsetTimeZone = (input) => {
   const date = typeof input === "string" ? new Date(input) : input;
   return offsetDate(date);
 };
 
-export const joinDinningTime = (date, time) => {
-  return new Date(date.toISOString().replace(/T.+/, "T" + time));
-};
-
 // https://stackoverflow.com/a/29774197
 export const getYMDString = (date) => {
-  if (date && date.toISOString()) {
+  if (isValidDate(date)) {
     return offsetDate(date).toISOString().split("T")[0];
   }
   return offsetDate().toISOString().split("T")[0];
 };
 
 const offsetDate = (date) => {
-  date = !date ? new Date() : date;
-  // Take timezone offset https://stackoverflow.com/questions/17545708/parse-date-without-timezone-javascript
+  date = isValidDate(date) ? date : new Date();
+  // Get timezone offset https://stackoverflow.com/questions/17545708/parse-date-without-timezone-javascript
   const offset = date.getTimezoneOffset() * 60_000;
   return new Date(date.getTime() - offset);
 };
+
+export const getFieldClassName = (touched, errors) =>
+  touched && errors ? "is-invalid" : "is-valid";

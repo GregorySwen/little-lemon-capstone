@@ -12,6 +12,8 @@ section.customers-say {
   width: 100%;
   flex-basis: 200px;
   align-self: center;
+  row-gap: 1.5rem;
+  column-gap: 1rem;
   margin-top: 10%;
   margin-bottom: 20%;
 }

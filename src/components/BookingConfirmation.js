@@ -57,7 +57,7 @@ export default function BookingConfirmation() {
           <section className="booking-field">
             <span className="section-title">Occasion:</span>
             <span className="section-text">
-              <FontAwesomeIcon icon={faWineGlass} size="xl" />
+              <FontAwesomeIcon icon={faWineGlass} size="lg" />
               &nbsp;
               {formData.occasion}
             </span>
@@ -65,7 +65,7 @@ export default function BookingConfirmation() {
           <section className="booking-field">
             <span className="section-title">Name:</span>
             <span className="section-text">
-              <FontAwesomeIcon icon={faCircleUser} size="xl" />
+              <FontAwesomeIcon icon={faCircleUser} size="lg" />
               &nbsp;
               {formData.firstName + " " + formData.lastName}
             </span>

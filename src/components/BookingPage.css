@@ -15,7 +15,6 @@
 }
 
 .booking-form .error-message {
-  color: red;
   margin-top: -0.25rem;
   grid-column: 2/2;
 }

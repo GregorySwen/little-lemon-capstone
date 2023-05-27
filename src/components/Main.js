@@ -6,26 +6,30 @@ import PlaceholderPage from "./common/PlaceholderPage";
 import { testFetchAPI } from "../utils/api";
 import BookingConfirmation from "./BookingConfirmation";
 import NotFound from "./common/NotFound";
+import { isValidDate } from "../utils/utils";
 
 export const updateTimes = (state, action) => {
+  if (!action.date) {
+    return [];
+  }
+  if (action.date.length < 4) {
+    return [];
+  }
+  const requestDate = new Date(action.date);
+  if (!isValidDate(requestDate)) {
+    return [];
+  }
   if (action.type === "test") {
-    return testFetchAPI(new Date(action.date));
+    return testFetchAPI(requestDate);
   }
-  return fetchAPI(new Date(action.date));
-};
 
-export const initializeTimes = (isTest) => {
-  if (isTest === true) {
-    return testFetchAPI(new Date());
-  }
-  if (!fetchAPI) {
-    throw Error(`Cannot load fetchAPI`);
-  }
   /*global fetchAPI*/
   /*eslint no-undef: "error"*/
 
-  return fetchAPI(new Date());
+  return fetchAPI(requestDate);
 };
+
+export const initializeTimes = () => [];
 
 export default function Main() {
   const [availableTimes, availableTimesDispatch] = useReducer(

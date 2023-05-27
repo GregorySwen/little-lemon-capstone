@@ -3,19 +3,16 @@ import "./BookingPage.css";
 import Button from "./common/Button";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { getYMDString, joinDinningTime, offsetTimeZone } from "../utils/utils";
+import { getFieldClassName, getYMDString } from "../utils/utils";
+import BookingFormErrorMessage from "./BookingFormErrorMessage";
 import { useEffect, useRef } from "react";
 
 export default function BookingPage(props) {
-  const tempDateRef = useRef(undefined);
-  useEffect(() => {
-    if (tempDateRef.current) {
-      console.log(tempDateRef.current);
-    }
-  }, [tempDateRef]);
+  const resDateRef = useRef({ value: "" });
+  const resTimeRef = useRef(true);
+  const { availableTimes, availableTimesDispatch } = props;
   const navigate = useNavigate();
   const occasions = ["Casual", "Birthday", "Anniversary"];
-  const today = offsetTimeZone(getYMDString());
   const buttonProps = {
     text: "Make Your reservation",
     width: 200,
@@ -26,10 +23,10 @@ export default function BookingPage(props) {
 
   const bookingFormik = useFormik({
     initialValues: {
-      date: today,
-      time: props.availableTimes[0],
-      dinningTime: joinDinningTime(today, props.availableTimes[0]),
-      numOfDiners: 1,
+      resDate: "",
+      resTime: availableTimes.length > 0 ? availableTimes[0] : "",
+      dinningTime: null,
+      numOfDiners: "1",
       occasion: occasions[0],
       firstName: "",
       lastName: "",
@@ -37,21 +34,31 @@ export default function BookingPage(props) {
     },
 
     validationSchema: Yup.object().shape({
-      date: Yup.date().min(
-        today,
-        "The Date field is invalid for reservation, please choose a future date."
-      ),
-      time: Yup.string().test(
-        "The Time field is not in the selection dropdown list, please choose options from the list.",
-        (time) => {
-          return props.availableTimes.indexOf(time) >= 0;
+      resDate: Yup.date()
+        .required(
+          "The Choose date field is empty, it is a required field and must be filled in."
+        )
+        .min(
+          getYMDString(),
+          "The Date field is invalid for reservation, please choose a future date."
+        ),
+      resTime: Yup.string().test(
+        "in-the-list",
+        "The Time field is not in the selection dropdown list or you changed date without re-choosing time, please choose options from the list.",
+        (resTIme) => {
+          return availableTimes.indexOf(resTIme) >= 0;
         }
       ),
-      dinningTime: Yup.date().min(
-        new Date(),
-        `The Time field is invalid for reservation, please choose a time later than ${new Date().toLocaleString()} `
-      ),
+      dinningTime: Yup.date()
+        .nullable()
+        .min(
+          new Date(),
+          `The Time field is invalid for reservation, please choose a time later than ${new Date().toLocaleString()} `
+        ),
       numOfDiners: Yup.number()
+        .required(
+          "The number of guests field is empty, it is a required field and must be filled in. "
+        )
         .min(
           1,
           "The Number of guests field is less than one, please increase the input."
@@ -87,6 +94,7 @@ export default function BookingPage(props) {
     }),
     validateOnChange: false,
     onSubmit: (data) => {
+      data.numOfDiners = parseInt(data.numOfDiners);
       data.firstName = data.firstName.trim();
       data.lastName = data.lastName.trim();
       data.email = data.email.trim();
@@ -102,6 +110,26 @@ export default function BookingPage(props) {
       }
     },
   });
+  const { errors, touched, values } = bookingFormik;
+  const handleResDateChange = (e) => {
+    bookingFormik.setFieldValue("resDate", e.target.value);
+  };
+  const handleResTimeChange = (e) => {
+    bookingFormik.setFieldValue("resTime", e.target.value);
+    bookingFormik.setFieldValue(
+      "dinningTime",
+      new Date(`${values.resDate}T${e.target.value}`)
+    );
+  };
+
+  useEffect(() => {
+    if (resDateRef.current.value) {
+      availableTimesDispatch({
+        date: resDateRef.current.value,
+      });
+    }
+  }, [resDateRef.current.value, availableTimesDispatch]);
+
   return (
     <>
       <section className="booking-page">
@@ -113,207 +141,173 @@ export default function BookingPage(props) {
             </label>
             <input
               type="date"
+              ref={resDateRef}
               id="res-date"
-              className={`form-control ${
-                bookingFormik.touched.date &&
-                bookingFormik.errors.date &&
-                "is-invalid"
-              }`}
-              min={getYMDString(today)}
-              value={getYMDString(bookingFormik.values.date)}
-              onChange={(e) => {
-                const inputDate = offsetTimeZone(e.target.value);
-                bookingFormik.setFieldValue("date", inputDate);
-                const oldTimeValue = bookingFormik.values.time;
-                props.availableTimesDispatch({
-                  date: inputDate,
-                });
-                if (props.availableTimes.indexOf(oldTimeValue) >= 0) {
-                  bookingFormik.setFieldValue("time", oldTimeValue);
-                  bookingFormik.setFieldValue(
-                    "dinningTime",
-                    joinDinningTime(inputDate, oldTimeValue)
-                  );
-                  return;
-                }
-                bookingFormik.setFieldValue("time", props.availableTimes[0]);
-                bookingFormik.setFieldValue(
-                  "dinningTime",
-                  joinDinningTime(inputDate, props.availableTimes[0])
-                );
-              }}
+              className={getFieldClassName(touched.resDate, errors.resDate)}
+              name="resDate"
+              min={getYMDString()}
+              value={values.resDate}
               onBlur={bookingFormik.handleBlur}
+              onChange={handleResDateChange}
             />
-            {bookingFormik.errors.date && (
-              <span className="error-message">{bookingFormik.errors.date}</span>
-            )}
+            <BookingFormErrorMessage
+              {...{
+                touched: touched.resDate,
+                error: errors.resDate,
+              }}
+            />
             <label className="call-to-action" htmlFor="res-time">
               Choose time
             </label>
             <select
               id="res-time"
-              className={`form-control ${
-                bookingFormik.touched.time &&
-                bookingFormik.errors.time &&
-                "is-invalid"
-              }`}
-              value={props.availableTimes.indexOf(bookingFormik.values.time)}
-              onChange={(e) => {
-                bookingFormik.setFieldValue(
-                  "time",
-                  props.availableTimes[e.target.value]
-                );
-                bookingFormik.setFieldValue(
-                  "dinningTime",
-                  joinDinningTime(
-                    bookingFormik.values.date,
-                    props.availableTimes[e.target.value]
-                  )
-                );
-              }}
+              name="resTime"
+              className={getFieldClassName(
+                touched.resTime,
+                errors.dinningTime || errors.resTime
+              )}
+              value={values.resTime}
+              onChange={handleResTimeChange}
               onBlur={bookingFormik.handleBlur}
             >
-              {props.availableTimes.map((time, idx) => (
-                <option key={time + idx} value={idx}>
-                  {time}
-                </option>
-              ))}
+              {availableTimes.map((time, idx) => {
+                if (idx === 0 && !values.resTime) {
+                  handleResTimeChange({
+                    target: { value: time },
+                  });
+                  resTimeRef.current = false;
+                }
+                if (time === values.resTime) {
+                  resTimeRef.current = false;
+                }
+                if (idx === availableTimes.length && resTimeRef.current) {
+                  handleResTimeChange({
+                    target: { value: availableTimes[0] },
+                  });
+                }
+                if (idx === availableTimes.length && !resTimeRef.current) {
+                  resTimeRef.current = true;
+                }
+                return (
+                  <option key={time + idx} value={time}>
+                    {time}
+                  </option>
+                );
+              })}
             </select>
-            {bookingFormik.errors.time && (
-              <span className="error-message">{bookingFormik.errors.time}</span>
-            )}
-            {bookingFormik.errors.dinningTime && (
-              <span className="error-message">
-                {bookingFormik.errors.dinningTime}
-              </span>
-            )}
+            <BookingFormErrorMessage
+              {...{
+                touched: errors.resTime === undefined,
+                error: errors.dinningTime,
+              }}
+            />
+            <BookingFormErrorMessage
+              {...{
+                touched: touched.resTime,
+                error: errors.resTime,
+              }}
+            />
             <label className="call-to-action" htmlFor="guests">
               Number of guests
             </label>
             <input
+              className={getFieldClassName(
+                touched.numOfDiners,
+                errors.numOfDiners
+              )}
               type="number"
-              value={bookingFormik.values.numOfDiners}
-              onChange={(e) => {
-                bookingFormik.setFieldValue(
-                  "numOfDiners",
-                  parseInt(e.target.value)
-                );
-              }}
+              name="numOfDiners"
+              value={values.numOfDiners}
               onBlur={bookingFormik.handleBlur}
+              onChange={bookingFormik.handleChange}
               placeholder="1"
               min="1"
               max={
                 !props.maxNumOfGuests ? "10" : props.maxNumOfGuests.toString()
               }
-              className={`form-control ${
-                bookingFormik.touched.numOfDiners &&
-                bookingFormik.errors.numOfDiners &&
-                "is-invalid"
-              }`}
               id="guests"
             />
-            {bookingFormik.errors.numOfDiners && (
-              <span className="error-message">
-                {bookingFormik.errors.numOfDiners}
-              </span>
-            )}
+            <BookingFormErrorMessage
+              {...{
+                touched: touched.numOfDiners,
+                error: errors.numOfDiners,
+              }}
+            />
             <label className="call-to-action" htmlFor="occasion">
               Occasion
             </label>
             <select
               id="occasion"
               className={`form-control ${
-                bookingFormik.touched.occasion &&
-                bookingFormik.errors.occasion &&
-                "is-invalid"
+                touched.occasion && errors.occasion && "is-invalid"
               }`}
-              value={occasions.indexOf(bookingFormik.values.occasion)}
-              onChange={(e) => {
-                bookingFormik.setFieldValue(
-                  "occasion",
-                  occasions[e.target.value]
-                );
-              }}
+              name="occasion"
+              value={values.occasion}
+              onChange={bookingFormik.handleChange}
             >
               {occasions.map((occasion, idx) => (
-                <option key={occasion + idx} value={idx}>
+                <option key={occasion + idx} value={occasion}>
                   {occasion}
                 </option>
               ))}
             </select>
-            {bookingFormik.errors.occasion && (
-              <span className="error-message">
-                {bookingFormik.errors.occasion}
-              </span>
-            )}
+            <BookingFormErrorMessage
+              {...{ touched: touched.occasion, error: errors.occasion }}
+            />
             <label className="call-to-action" htmlFor="first-name">
               First name
             </label>
             <input
               type="text"
-              value={bookingFormik.values.firstName}
+              value={values.firstName}
               onChange={bookingFormik.handleChange}
               onBlur={bookingFormik.handleBlur}
               placeholder="First name"
               name="firstName"
               className={`form-control ${
-                bookingFormik.touched.firstName &&
-                bookingFormik.errors.firstName &&
-                "is-invalid"
+                touched.firstName && errors.firstName && "is-invalid"
               }`}
               id="first-name"
             />
-            {bookingFormik.touched.firstName &&
-              bookingFormik.errors.firstName && (
-                <span className="error-message">
-                  {bookingFormik.errors.firstName}
-                </span>
-              )}
+            {touched.firstName && errors.firstName && (
+              <span className="error-message">{errors.firstName}</span>
+            )}
             <label className="call-to-action" htmlFor="last-name">
               Last name
             </label>
             <input
               type="text"
-              value={bookingFormik.values.lastName}
+              value={values.lastName}
               onChange={bookingFormik.handleChange}
               onBlur={bookingFormik.handleBlur}
               placeholder="Last name"
               name="lastName"
               id="last-name"
               className={`form-control ${
-                bookingFormik.touched.lastName &&
-                bookingFormik.errors.lastName &&
-                "is-invalid"
+                touched.lastName && errors.lastName && "is-invalid"
               }`}
             />
-            {bookingFormik.touched.lastName &&
-              bookingFormik.errors.lastName && (
-                <span className="error-message">
-                  {bookingFormik.errors.lastName}
-                </span>
-              )}
+            {touched.lastName && errors.lastName && (
+              <span className="error-message">{errors.lastName}</span>
+            )}
 
             <label className="call-to-action" htmlFor="booking-email">
               Email&nbsp;-&nbsp;optional
             </label>
             <input
               type="email"
-              value={bookingFormik.values.email}
+              value={values.email}
               onChange={bookingFormik.handleChange}
               onBlur={bookingFormik.handleBlur}
               placeholder="email@example.com"
               id="booking-email"
               name="email"
               className={`form-control ${
-                bookingFormik.touched.email &&
-                bookingFormik.errors.email &&
-                "is-invalid"
+                touched.email && errors.email && "is-invalid"
               }`}
             />
-            {bookingFormik.touched.email && bookingFormik.errors.email && (
-              <span className="error-message">
-                {bookingFormik.errors.email}
-              </span>
+            {touched.email && errors.email && (
+              <span className="error-message">{errors.email}</span>
             )}
 
             <Button {...buttonProps} />
