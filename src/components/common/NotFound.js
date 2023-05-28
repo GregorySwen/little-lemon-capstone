@@ -16,6 +16,7 @@ export default function NotFound() {
     height: 60,
     className: "primary",
     handleClick: back,
+    ariaLabel: "Back to the homepage",
   };
   return (
     <>

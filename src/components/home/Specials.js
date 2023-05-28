@@ -15,6 +15,7 @@ export default function Specials() {
     height: 60,
     className: "primary",
     handleClick: navigateToMenu,
+    ariaLabel: "Open the online menu",
   };
 
   return (

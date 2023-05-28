@@ -5,11 +5,11 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { getFieldClassName, getYMDString } from "../utils/utils";
 import BookingFormErrorMessage from "./BookingFormErrorMessage";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { testSubmitAPI } from "../utils/api";
 
 export default function BookingPage(props) {
   const resDateRef = useRef({ value: "" });
-  const resTimeRef = useRef(true);
   const { availableTimes, availableTimesDispatch } = props;
   const navigate = useNavigate();
   const occasions = ["Casual", "Birthday", "Anniversary"];
@@ -19,6 +19,14 @@ export default function BookingPage(props) {
     height: 60,
     className: "primary",
     type: "submit",
+    ariaLabel: "Submit",
+  };
+
+  const getChooseTimeErrorMessage = () => {
+    if (availableTimes.length === 0) {
+      return "The Choose time field is empty, there are no options please choose a valid date to get the time.";
+    }
+    return "The Choose time field is not in the selection dropdown list, please choose an option from the list.";
   };
 
   const bookingFormik = useFormik({
@@ -40,20 +48,25 @@ export default function BookingPage(props) {
         )
         .min(
           getYMDString(),
-          "The Date field is invalid for reservation, please choose a future date."
+          "The Choose date field is invalid for reservation, please choose a future date."
         ),
       resTime: Yup.string().test(
         "in-the-list",
-        "The Time field is not in the selection dropdown list or you changed date without re-choosing time, please choose options from the list.",
+        getChooseTimeErrorMessage(),
         (resTIme) => {
           return availableTimes.indexOf(resTIme) >= 0;
         }
       ),
       dinningTime: Yup.date()
-        .nullable()
+        .required(
+          "The time you chose is not valid, please choose a valid date, then check the updated time options and choose a time."
+        )
+        .typeError(
+          "The time you chose is not valid, please choose a valid date, then check the updated time options and choose a time."
+        )
         .min(
           new Date(),
-          `The Time field is invalid for reservation, please choose a time later than ${new Date().toLocaleString()} `
+          `The Choose time field is invalid for reservation, please choose a time later than ${new Date().toLocaleString()} `
         ),
       numOfDiners: Yup.number()
         .required(
@@ -98,37 +111,49 @@ export default function BookingPage(props) {
       data.firstName = data.firstName.trim();
       data.lastName = data.lastName.trim();
       data.email = data.email.trim();
-      if (!submitAPI) {
+      if (!submitAPI && !props.isTest) {
         throw Error("Cannot load submitAPI");
       }
       /*global submitAPI*/
       /*eslint no-undef: "error"*/
 
-      const result = submitAPI(data);
-      if (result) {
+      const result = props.isTest ? testSubmitAPI(data) : submitAPI(data);
+      if (result && !props.isTest) {
         navigate("/booking-confirm", { ...{ state: { formData: data } } });
       }
     },
   });
   const { errors, touched, values } = bookingFormik;
-  const handleResDateChange = (e) => {
-    bookingFormik.setFieldValue("resDate", e.target.value);
-  };
-  const handleResTimeChange = (e) => {
-    bookingFormik.setFieldValue("resTime", e.target.value);
-    bookingFormik.setFieldValue(
-      "dinningTime",
-      new Date(`${values.resDate}T${e.target.value}`)
-    );
-  };
+  const handleResTimeChange = useCallback(
+    (e) => {
+      bookingFormik.setFieldValue("resTime", e.target.value).then();
+      bookingFormik
+        .setFieldValue(
+          "dinningTime",
+          new Date(`${values.resDate}T${e.target.value}`)
+        )
+        .then();
+    },
+    [bookingFormik, values.resDate]
+  );
 
   useEffect(() => {
-    if (resDateRef.current.value) {
-      availableTimesDispatch({
-        date: resDateRef.current.value,
+    availableTimesDispatch({
+      date: resDateRef.current.value,
+    });
+  }, [resDateRef.current.value, availableTimesDispatch]);
+
+  useEffect(() => {
+    if (availableTimes.length === 0) {
+      return;
+    }
+    const oldIdx = availableTimes.indexOf(values.resTime);
+    if (oldIdx === -1) {
+      handleResTimeChange({
+        target: { value: availableTimes[0] },
       });
     }
-  }, [resDateRef.current.value, availableTimesDispatch]);
+  }, [values.resTime, availableTimes, handleResTimeChange]);
 
   return (
     <>
@@ -148,7 +173,7 @@ export default function BookingPage(props) {
               min={getYMDString()}
               value={values.resDate}
               onBlur={bookingFormik.handleBlur}
-              onChange={handleResDateChange}
+              onChange={bookingFormik.handleChange}
             />
             <BookingFormErrorMessage
               {...{
@@ -157,7 +182,10 @@ export default function BookingPage(props) {
               }}
             />
             <label className="call-to-action" htmlFor="res-time">
-              Choose time
+              Choose time{" "}
+              {availableTimes.length === 0 && !props.isTest
+                ? " - Please select a date to update the options"
+                : null}
             </label>
             <select
               id="res-time"
@@ -171,23 +199,6 @@ export default function BookingPage(props) {
               onBlur={bookingFormik.handleBlur}
             >
               {availableTimes.map((time, idx) => {
-                if (idx === 0 && !values.resTime) {
-                  handleResTimeChange({
-                    target: { value: time },
-                  });
-                  resTimeRef.current = false;
-                }
-                if (time === values.resTime) {
-                  resTimeRef.current = false;
-                }
-                if (idx === availableTimes.length && resTimeRef.current) {
-                  handleResTimeChange({
-                    target: { value: availableTimes[0] },
-                  });
-                }
-                if (idx === availableTimes.length && !resTimeRef.current) {
-                  resTimeRef.current = true;
-                }
                 return (
                   <option key={time + idx} value={time}>
                     {time}
@@ -238,9 +249,7 @@ export default function BookingPage(props) {
             </label>
             <select
               id="occasion"
-              className={`form-control ${
-                touched.occasion && errors.occasion && "is-invalid"
-              }`}
+              className={getFieldClassName(touched.occasion, errors.occasion)}
               name="occasion"
               value={values.occasion}
               onChange={bookingFormik.handleChange}
@@ -264,9 +273,7 @@ export default function BookingPage(props) {
               onBlur={bookingFormik.handleBlur}
               placeholder="First name"
               name="firstName"
-              className={`form-control ${
-                touched.firstName && errors.firstName && "is-invalid"
-              }`}
+              className={getFieldClassName(touched.firstName, errors.firstName)}
               id="first-name"
             />
             {touched.firstName && errors.firstName && (
@@ -283,9 +290,7 @@ export default function BookingPage(props) {
               placeholder="Last name"
               name="lastName"
               id="last-name"
-              className={`form-control ${
-                touched.lastName && errors.lastName && "is-invalid"
-              }`}
+              className={getFieldClassName(touched.lastName, errors.lastName)}
             />
             {touched.lastName && errors.lastName && (
               <span className="error-message">{errors.lastName}</span>
@@ -302,15 +307,15 @@ export default function BookingPage(props) {
               placeholder="email@example.com"
               id="booking-email"
               name="email"
-              className={`form-control ${
-                touched.email && errors.email && "is-invalid"
-              }`}
+              className={getFieldClassName(touched.email, errors.email)}
             />
             {touched.email && errors.email && (
               <span className="error-message">{errors.email}</span>
             )}
 
-            <Button {...buttonProps} />
+            <Button
+              {...{ ...buttonProps, handleClick: bookingFormik.handleSubmit }}
+            />
           </form>
         </section>
       </section>

@@ -15,6 +15,7 @@ export default function Hero() {
     height: 60,
     className: "primary",
     handleClick: navigateToBooking,
+    ariaLabel: "Book a table",
   };
   return (
     <>

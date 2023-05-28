@@ -21,6 +21,6 @@ export const testFetchAPI = function (date) {
   }
   return result;
 };
-const submitAPI = function (formData) {
+export const testSubmitAPI = function (formData) {
   return true;
 };

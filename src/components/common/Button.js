@@ -8,19 +8,14 @@ export default function Button(props) {
     width: buttonWidth + "px",
     height: buttonHeight + "px",
   };
-  const handleClick = () => {
-    if (!props.handleClick) {
-      return;
-    }
-    props.handleClick();
-  };
   return (
     <>
       <button
         className={props.className}
         style={buttonStyle}
         type={!props.type ? "button" : props.type}
-        onClick={handleClick}
+        onClick={props.handleClick}
+        aria-label={props.ariaLabel}
       >
         <span className="call-to-action">{buttonText}</span>
       </button>

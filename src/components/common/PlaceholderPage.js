@@ -13,6 +13,7 @@ export default function PlaceholderPage(props) {
     height: 60,
     className: "primary",
     handleClick: back,
+    ariaLabel: "Go back to the previous page",
   };
   return (
     <>
